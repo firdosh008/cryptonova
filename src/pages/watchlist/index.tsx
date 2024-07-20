@@ -39,7 +39,7 @@ const Watchlist=()=> {
               margin: "2rem",
             }}
           >
-            <a href="/dashboard">
+            <a href="/">
               <Button text="Dashboard" onClick={()=>{}} outlined={false} />
             </a>
           </div>
