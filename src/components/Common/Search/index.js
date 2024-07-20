@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 
-function Search({ search, handleChange }) {
+const Search = ({ search, handleChange }) => {
   return (
     <div className="search-flex">
       <SearchIcon sx={{ color: "var(--grey)", fontSize: "1.2rem" }} />

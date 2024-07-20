@@ -34,14 +34,14 @@ const Home: FC = () => {
     const coins = await get100Coins();
     if (coins) {
       setAllCoins(coins);
-      const data1 = await getCoinData(crypto1);
-      const data2 = await getCoinData(crypto2);
+      const data1 = await getCoinData(crypto1,false);
+      const data2 = await getCoinData(crypto2,false);
       settingCoinObject(data1, setCoin1Data);
       settingCoinObject(data2, setCoin2Data);
       if (data1 && data2) {
         // getPrices
-        const prices1 = await getPrices(crypto1, days, priceType);
-        const prices2 = await getPrices(crypto2, days, priceType);
+        const prices1 = await getPrices(crypto1, days, priceType,false);
+        const prices2 = await getPrices(crypto2, days, priceType,false);
         settingChartData(setChartData, prices1, prices2);
         setLoading(false);
       }
@@ -61,22 +61,22 @@ const Home: FC = () => {
       // crypto2 is being changed
       setCrypto2(newCrypto2);
       // fetch coin2 data
-      const data2 = await getCoinData(newCrypto2);
+      const data2 = await getCoinData(newCrypto2,e);
       settingCoinObject(data2, setCoin2Data);
       // fetch prices again
-      const prices1 = await getPrices(crypto1, days, priceType);
-      const prices2 = await getPrices(newCrypto2, days, priceType);
+      const prices1 = await getPrices(crypto1, days, priceType,e);
+      const prices2 = await getPrices(newCrypto2, days, priceType,e);
       settingChartData(setChartData, prices1, prices2);
     } else {
       const newCrypto1 = e.target.value;
       // crypto1 is being changed
       setCrypto1(newCrypto1);
       // fetch coin1 data
-      const data1 = await getCoinData(newCrypto1);
+      const data1 = await getCoinData(newCrypto1,e);
       settingCoinObject(data1, setCoin1Data);
       // fetch coin prices
-      const prices1 = await getPrices(newCrypto1, days, priceType);
-      const prices2 = await getPrices(crypto2, days, priceType);
+      const prices1 = await getPrices(newCrypto1, days, priceType,e);
+      const prices2 = await getPrices(crypto2, days, priceType,e);
       settingChartData(setChartData, prices1, prices2);
     }
     setLoading(false);
@@ -86,8 +86,8 @@ const Home: FC = () => {
     const newDays = e.target.value;
     setLoading(true);
     setDays(newDays);
-    const prices1 = await getPrices(crypto1, newDays, priceType);
-    const prices2 = await getPrices(crypto2, newDays, priceType);
+    const prices1 = await getPrices(crypto1, newDays, priceType,e);
+    const prices2 = await getPrices(crypto2, newDays, priceType,e);
     settingChartData(setChartData, prices1, prices2);
     setLoading(false);
   };
@@ -96,8 +96,8 @@ const Home: FC = () => {
     const newPriceType = e.target.value;
     setLoading(true);
     setPriceType(newPriceType);
-    const prices1 = await getPrices(crypto1, days, newPriceType);
-    const prices2 = await getPrices(crypto2, days, newPriceType);
+    const prices1 = await getPrices(crypto1, days, newPriceType,e);
+    const prices2 = await getPrices(crypto2, days, newPriceType,e);
     settingChartData(setChartData, prices1, prices2);
     setLoading(false);
   };

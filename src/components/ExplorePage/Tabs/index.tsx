@@ -34,3 +34,5 @@ const TabsComponent: FC<any> = ({ coins, setSearch }) => {
     </table>
   );
 };
+
+export default TabsComponent

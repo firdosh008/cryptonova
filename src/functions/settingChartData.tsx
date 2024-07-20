@@ -1,13 +1,13 @@
 import { gettingDate } from "./getDate";
 
-export const settingChartData = (setChartData, prices1, prices2) => {
+export const settingChartData = (setChartData:any, prices1:any, prices2:any) => {
   if (prices2) {
     setChartData({
-      labels: prices1?.map((data) => gettingDate(data[0])),
+      labels: prices1?.map((data:any) => gettingDate(data[0])),
       datasets: [
         {
           label: "Crypto 1",
-          data: prices1?.map((data) => data[1]),
+          data: prices1?.map((data:any) => data[1]),
           borderWidth: 1,
           fill: false,
           backgroundColor: "rgba(58, 128, 233,0.1)",
@@ -18,7 +18,7 @@ export const settingChartData = (setChartData, prices1, prices2) => {
         },
         {
           label: "Crypto 2",
-          data: prices2?.map((data) => data[1]),
+          data: prices2?.map((data:any) => data[1]),
           borderWidth: 1,
           fill: false,
           tension: 0.25,
@@ -30,10 +30,10 @@ export const settingChartData = (setChartData, prices1, prices2) => {
     });
   } else {
     setChartData({
-      labels: prices1?.map((data) => gettingDate(data[0])),
+      labels: prices1?.map((data:any) => gettingDate(data[0])),
       datasets: [
         {
-          data: prices1?.map((data) => data[1]),
+          data: prices1?.map((data:any) => data[1]),
           borderWidth: 1,
           fill: true,
           backgroundColor: "rgba(58, 128, 233,0.1)",

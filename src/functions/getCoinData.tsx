@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getCoinData = (id, setError) => {
+export const getCoinData = (id:any, setError:any) => {
   const coin = axios
     .get(`https://api.coingecko.com/api/v3/coins/${id}`)
     .then((response) => {

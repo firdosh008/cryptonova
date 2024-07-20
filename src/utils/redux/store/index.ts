@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit/react";
 import { createWrapper } from "next-redux-wrapper";
+import themeReducer from "../reducer/themeReducer";
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {},
+    reducer: {themeReducer},
   });
 };
 

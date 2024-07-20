@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 
-export const saveItemToWatchlist = (e, id) => {
+export const saveItemToWatchlist = (e:any, id:any) => {
   e.preventDefault();
-  let watchlist = JSON.parse(localStorage.getItem("watchlist"));
+  let watchlist = JSON.parse(localStorage.getItem("watchlist") ||"" );
 
   if (watchlist) {
     if (!watchlist.includes(id)) {

@@ -1,43 +1,42 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { IconButton, Switch } from "@mui/material";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/utils/redux";
+import { setTheme, Theme } from "@/utils/redux/reducer/themeReducer";
 
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState("dark");
-
-  useEffect(() => {
-    if (localStorage.getItem("theme") === "dark") {
-      setDark();
-    } else {
-      setLight();
-    }
-  }, []);
+  const dispatch = useAppDispatch();
+  const darkMode = useAppSelector(Theme);
 
   const changeMode = () => {
-    if (localStorage.getItem("theme") !== "dark") {
-      setDark();
-    } else {
-      setLight();
-    }
-    setDarkMode(!darkMode);
+    dispatch(setTheme(!darkMode));
     toast.success("Theme Changed!");
   };
 
-  const setDark = () => {
-    localStorage.setItem("theme", "dark");
+  
+  const setDark = useCallback(() => {
     document.documentElement.setAttribute("data-theme", "dark");
-  };
+  },[]);
 
-  const setLight = () => {
-    localStorage.setItem("theme", "light");
+  const setLight = useCallback(() => {
     document.documentElement.setAttribute("data-theme", "light");
-  };
+  },[]);
+
+  useEffect(() => {
+    if (darkMode) {
+      setDark()
+    } else {
+      setLight()
+    }
+  }, [darkMode,setDark,setLight])
+
+  
 
   return (
     <div className="navigation-bar">

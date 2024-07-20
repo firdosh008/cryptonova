@@ -47,3 +47,6 @@ testem.log
 Thumbs.db
 
 .nvmrc
+
+# Local Netlify folder
+.netlify
