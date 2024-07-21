@@ -1,4 +1,42 @@
-export const settingCoinObject = (data:any, setCoin:any) => {
+interface MarketData {
+  price_change_percentage_24h: number;
+  total_volume: {
+    usd: number;
+  };
+  current_price: {
+    usd: number;
+  };
+  market_cap: {
+    usd: number;
+  };
+}
+
+interface CoinData {
+  id: string;
+  name: string;
+  symbol: string;
+  image: {
+    large: string;
+  };
+  description: {
+    en: string;
+  };
+  market_data: MarketData;
+}
+
+interface Coin {
+  id: string;
+  name: string;
+  symbol: string;
+  image: string;
+  desc: string;
+  price_change_percentage_24h: number;
+  total_volume: number;
+  current_price: number;
+  market_cap: number;
+}
+
+export const settingCoinObject = (data: CoinData, setCoin: (coin: Coin) => void) => {
   setCoin({
     id: data.id,
     name: data.name,

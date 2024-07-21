@@ -1,20 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+// themeReducer.ts
 
-const themeReducer= createSlice({
-    name:"themeReducer",
-    initialState:{
-        dark:false
+import { createSlice } from '@reduxjs/toolkit';
+
+const themeReducer = createSlice({
+  name: 'theme',
+  initialState: {
+    dark: false,
+  },
+  reducers: {
+    setTheme(state, action) {
+      state.dark = action.payload;
     },
-    reducers:{
-        setTheme(state,action){
-            state.dark=action.payload
-        }
-    }
-})
+  },
+});
 
 export default themeReducer.reducer;
-export const {
-    setTheme
-}=themeReducer.actions
+export const { setTheme } = themeReducer.actions;
 
-export const Theme = (state:any)=>state.themeReducer.dark
+// Selector
+export const selectDarkMode = (state: any) => state.theme.dark;

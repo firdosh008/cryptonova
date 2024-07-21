@@ -1,31 +1,31 @@
-import { toast } from "react-toastify";
+// src/components/SaveItemToWatchlist.tsx
 
-export const saveItemToWatchlist = (e:any, id:any) => {
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { addToWatchlist } from '../utils/redux/slices/watchlistSlice';
+import { AppDispatch, RootState } from '../utils/redux/store';
+
+interface SaveItemToWatchlistProps {
+  e: React.MouseEvent<HTMLButtonElement>;
+  id: string;
+}
+
+export const SaveItemToWatchlist: React.FC<SaveItemToWatchlistProps> = ({ e, id }) => {
   e.preventDefault();
-  let watchlist = JSON.parse(localStorage.getItem("watchlist") ||"" );
+  const dispatch = useDispatch<AppDispatch>();
+  const watchlist = useSelector((state: RootState) => state.watchlist.items);
 
-  if (watchlist) {
-    if (!watchlist.includes(id)) {
-      watchlist.push(id);
-      toast.success(
-        `${
-          id.substring(0, 1).toUpperCase() + id.substring(1)
-        } - added to the watchlist`
-      );
-    } else {
-      toast.error(
-        `${
-          id.substring(0, 1).toUpperCase() + id.substring(1)
-        } - is already added to the watchlist!`
-      );
-    }
+  if (watchlist.includes(id)) {
+    toast.error(
+      `${id.charAt(0).toUpperCase() + id.slice(1)} is already added to the watchlist!`
+    );
   } else {
-    watchlist = [id];
+    dispatch(addToWatchlist(id));
     toast.success(
-      `${
-        id.substring(0, 1).toUpperCase() + id.substring(1)
-      } - added to the watchlist`
+      `${id.charAt(0).toUpperCase() + id.slice(1)} added to the watchlist`
     );
   }
-  localStorage.setItem("watchlist", JSON.stringify(watchlist));
+
+  return null;
 };

@@ -1,24 +1,33 @@
-import { toast } from "react-toastify";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { removeFromWatchlist } from '../utils/redux/slices/watchlistSlice';
+import { AppDispatch, RootState } from '../utils/redux/store';
+import { useSelector } from 'react-redux';
 
-export const removeItemToWatchlist = (e:any, id:any, setIsCoinAdded:any) => {
+interface RemoveItemToWatchlistProps {
+  e: React.MouseEvent<HTMLButtonElement>;
+  id: string;
+  setIsCoinAdded: (value: boolean) => void;
+}
+
+export const RemoveItemToWatchlist: React.FC<RemoveItemToWatchlistProps> = ({ e, id, setIsCoinAdded }) => {
   e.preventDefault();
+  const dispatch = useDispatch<AppDispatch>();
+  const watchlist = useSelector((state: RootState) => state.watchlist.items);
+
   if (window.confirm("Are you sure you want to remove this coin?")) {
-    let watchlist = JSON.parse(localStorage.getItem("watchlist") || " ");
-    const newList = watchlist.filter((coin:any) => coin != id);
+    dispatch(removeFromWatchlist(id));
     setIsCoinAdded(false);
-    localStorage.setItem("watchlist", JSON.stringify(newList));
     toast.success(
-      `${
-        id.substring(0, 1).toUpperCase() + id.substring(1)
-      } - has been removed!`
+      `${id.charAt(0).toUpperCase() + id.slice(1)} has been removed!`
     );
-    window.location.reload();
   } else {
     toast.error(
-      `${
-        id.substring(0, 1).toUpperCase() + id.substring(1)
-      } - could not be removed!`
+      `${id.charAt(0).toUpperCase() + id.slice(1)} could not be removed!`
     );
     setIsCoinAdded(true);
   }
+
+  return null;
 };

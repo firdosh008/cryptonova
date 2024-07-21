@@ -1,31 +1,35 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "@/components/Common/Button";
 import Header from "@/components/Common/Header";
 import TabsComponent from "@/components/ExplorePage/Tabs";
 import { get100Coins } from "@/functions/get100Coins";
+import { RootState, AppDispatch } from "@/utils/redux/store";
+import { setWatchlist } from "@/utils/redux/slices/watchlistSlice";
 
-const Watchlist=()=> {
-  const watchlist = JSON.parse(localStorage.getItem("watchlist") || "");
+const Watchlist = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const watchlist = useSelector((state: RootState) => state.watchlist.items);
   const [coins, setCoins] = useState<any>([]);
 
   useEffect(() => {
-    if (watchlist) {
+    if (watchlist.length > 0) {
       getData();
     }
-  }, []);
+  }, [watchlist]);
 
   const getData = async () => {
     const allCoins = await get100Coins();
     if (allCoins) {
-      setCoins(allCoins.filter((coin:any) => watchlist.includes(coin.id)));
+      setCoins(allCoins.filter((coin: any) => watchlist.includes(coin.id)));
     }
   };
 
   return (
     <div>
       <Header />
-      {watchlist?.length > 0 ? (
+      {watchlist.length > 0 ? (
         <TabsComponent coins={coins} />
       ) : (
         <div>
@@ -40,7 +44,7 @@ const Watchlist=()=> {
             }}
           >
             <a href="/">
-              <Button text="Dashboard" onClick={()=>{}} outlined={false} />
+              <Button text="Dashboard" onClick={() => {}} outlined={false} />
             </a>
           </div>
         </div>

@@ -1,42 +1,37 @@
-"use client";
-import React, { useCallback, useEffect, useState } from "react";
-import Drawer from "@mui/material/Drawer";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import { IconButton, Switch } from "@mui/material";
-import { toast } from "react-toastify";
-import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/utils/redux";
-import { setTheme, Theme } from "@/utils/redux/reducer/themeReducer";
+import React, { useCallback, useEffect, useState } from 'react';
+import Drawer from '@mui/material/Drawer';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import { IconButton, Switch } from '@mui/material';
+import { toast } from 'react-toastify';
+import Link from 'next/link';
+import { useAppDispatch, useAppSelector } from '@/utils/redux';
+import { setTheme, selectDarkMode } from '@/utils/redux/reducer/themeReducer';
 
-
-export default function Header() {
+ const  index = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const darkMode = useAppSelector(Theme);
+  const darkMode = useAppSelector(selectDarkMode); 
 
   const changeMode = () => {
     dispatch(setTheme(!darkMode));
-    toast.success("Theme Changed!");
+    toast.success('Theme Changed!');
   };
 
-  
   const setDark = useCallback(() => {
-    document.documentElement.setAttribute("data-theme", "dark");
-  },[]);
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }, []);
 
   const setLight = useCallback(() => {
-    document.documentElement.setAttribute("data-theme", "light");
-  },[]);
+    document.documentElement.setAttribute('data-theme', 'light');
+  }, []);
 
   useEffect(() => {
     if (darkMode) {
-      setDark()
+      setDark();
     } else {
-      setLight()
+      setLight();
     }
-  }, [darkMode,setDark,setLight])
-
-  
+  }, [darkMode, setDark, setLight]);
 
   return (
     <div className="navigation-bar">
@@ -79,3 +74,4 @@ export default function Header() {
     </div>
   );
 }
+export default index;
